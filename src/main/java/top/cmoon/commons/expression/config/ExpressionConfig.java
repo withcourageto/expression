@@ -1,6 +1,7 @@
 package top.cmoon.commons.expression.config;
 
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,12 +25,14 @@ public class ExpressionConfig {
 
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnBean(ExprEngine.class)
     WordParser wordParser() {
         return new DefaultWordParser();
     }
 
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnBean(ExprEngine.class)
     SuffixExprParser suffixExprParser() {
         return new DefaultSuffixExprParser();
     }
@@ -37,8 +40,16 @@ public class ExpressionConfig {
 
     @Bean
     @ConditionalOnMissingBean
+    @ConditionalOnBean(ExprEngine.class)
     ExprEvaluatorFactory exprEvaluatorFactory() {
         return new DefaultExprEvaluatorFactory();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @ConditionalOnBean(WordParser.class)
+    OperatorRegistry operatorRegistry() {
+        return new DefaultOperatorRegistry();
     }
 
 }

@@ -6,7 +6,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import top.cmoon.commons.expression.core.DefaultExprEngine;
 import top.cmoon.commons.expression.core.ExprEngine;
 
 import java.util.HashMap;
@@ -33,6 +32,16 @@ public class ExpressionApplicationTests {
         Map<String, Object> context = new HashMap<>();
         Object obj = engine.eval(expr, context);
         Assert.assertEquals(obj, Boolean.FALSE);
+    }
+
+    public void testContext() {
+
+        Map<String, Object> context = new HashMap<>();
+        context.put("count", 40);
+
+        Object obj = engine.eval("count == 40", context);
+
+        Assert.assertEquals(obj, Boolean.TRUE);
     }
 
 

@@ -144,10 +144,10 @@ public class WordScanner {
                     token.add(ch);
                     ch = prog[p++];
                     if (ch == '=') {
-                        syn = 22;
+                        syn = TokenCodeConst.LESS_THAN_EQUAL;
                         token.add(ch);
                     } else {
-                        syn = 23;
+                        syn = TokenCodeConst.LESS_THAN;
                         p--;
                     }
                     break;
@@ -156,10 +156,10 @@ public class WordScanner {
                     ch = prog[p++];
 
                     if (ch == '=') {
-                        syn = 24;
+                        syn = TokenCodeConst.GREATER_THAN_EQUAL;
                         token.add(ch);
                     } else {
-                        syn = 20;
+                        syn = TokenCodeConst.GREATER_THAN;
                         p--;
                     }
                     break;
@@ -168,7 +168,7 @@ public class WordScanner {
                     ch = prog[p++];
 
                     if (ch == '=') {
-                        syn = 30;
+                        syn = TokenCodeConst.NOT_EQUAL;
                         token.add(ch);
                     } else {
                         syn = 31;

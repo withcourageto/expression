@@ -4,6 +4,7 @@ import top.cmoon.commons.expression.token.Token;
 import top.cmoon.commons.expression.token.constant.TokenCodeConst;
 import top.cmoon.commons.expression.token.operand.*;
 import top.cmoon.commons.expression.token.operator.EqualEqualToken;
+import top.cmoon.commons.expression.token.operator.GreaterThanToken;
 import top.cmoon.commons.expression.token.operator.NotEqualToken;
 
 import java.util.List;
@@ -37,6 +38,8 @@ class DefaultWordToTokenHandler implements WordToTokenHandler {
                     return new StringLiteralToken(token(progress.token));
                 } else if (progress.syn == TokenCodeConst.LITERAL_NULL) {
                     return new NullToken();
+                } else if (progress.syn == TokenCodeConst.GREATER_THAN) {
+                    return new GreaterThanToken();
                 } else {
                     throw new RuntimeException("暂不支持：" + "(" + progress.syn + "," + token(progress.token) + ")");
                 }

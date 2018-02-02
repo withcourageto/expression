@@ -19,10 +19,15 @@ public class TokenCodeConst {
     public static final int STRING_LITERAL = 35; // '...'
 
     // 以下是运算符
-    public static final int NOT_EQUAL = 40;  // !=
-    public static final int EQUAL_EQUAL = 41; // ==
+    public static final int NOT_EQUAL = 31;  // !=
+    public static final int EQUAL_EQUAL = 32; // ==
+
+
     public static final int GREATER_THAN = 42; // >
-    public static final int LESS_THAN = 43; // <
+    public static final int GREATER_THAN_EQUAL = 43; // >=
+    public static final int LESS_THAN = 44; // <
+    public static final int LESS_THAN_EQUAL = 45; // <=
+
 
     public static final int PLUS = 71;      // +
     public static final int SUBTRACT = 72;  // -
