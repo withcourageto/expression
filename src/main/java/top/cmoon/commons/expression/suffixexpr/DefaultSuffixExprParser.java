@@ -1,6 +1,5 @@
 package top.cmoon.commons.expression.suffixexpr;
 
-import top.cmoon.commons.expression.suffixexpr.SuffixExprParser;
 import top.cmoon.commons.expression.token.OperatorToken;
 import top.cmoon.commons.expression.token.Token;
 import top.cmoon.commons.expression.token.TokenType;

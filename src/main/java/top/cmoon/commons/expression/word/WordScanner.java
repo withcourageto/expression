@@ -87,6 +87,9 @@ public class WordScanner {
             int tempPosition = p - 1;
             while (isDigital(ch)) {
                 token.add(ch);
+                if (p >= prog.length) {
+                    break;
+                }
                 ch = prog[p++];
             }
             boolean isDouble = false;
@@ -108,7 +111,8 @@ public class WordScanner {
 
             }
             if (!isDouble) {
-                p--;// 跳回到结束数字的地方，如果是空格，下一次scan会丢弃
+                if (p < prog.length)
+                    p--;// 跳回到结束数字的地方，如果是空格，下一次scan会丢弃
                 syn = TokenCodeConst.INT_NUMBER;
             } else {
                 syn = TokenCodeConst.FLOAT_NUMBER;
@@ -180,7 +184,7 @@ public class WordScanner {
 
                     ch = prog[p++];
                     if (ch == '=') {
-                        syn = 33;
+                        syn = TokenCodeConst.EQUAL_EQUAL;
                         token.add(ch);
                     } else {
                         syn = -1;
@@ -195,11 +199,11 @@ public class WordScanner {
                     token.add(ch);
                     break;
                 case '+':
-                    syn = 15;
+                    syn = TokenCodeConst.PLUS;
                     token.add(ch);
                     break;
                 case '-':
-                    syn = 16;
+                    syn = TokenCodeConst.SUBTRACT;
                     token.add(ch);
                     break;
                 case '%':

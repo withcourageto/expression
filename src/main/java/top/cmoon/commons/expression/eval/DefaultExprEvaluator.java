@@ -1,6 +1,8 @@
 package top.cmoon.commons.expression.eval;
 
+import top.cmoon.commons.expression.exception.GrammarException;
 import top.cmoon.commons.expression.token.*;
+import top.cmoon.commons.expression.token.operator.EvalOperatorToken;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +17,7 @@ public class DefaultExprEvaluator implements ExprEvaluator {
     }
 
     /**
+
      * 使用栈运算方式来计算后缀表达式的值
      *
      * @param evalContext
@@ -28,15 +31,17 @@ public class DefaultExprEvaluator implements ExprEvaluator {
                 valStack.push(token);
             } else {
 
-                OperatorToken operatorToken = (OperatorToken) token;
+                EvalOperatorToken operatorToken = (EvalOperatorToken) token;
                 if (operatorToken.operatorType() == OperatorType.BINARY) {
-                    OperandToken operand1 = (OperandToken) valStack.pop();
                     OperandToken operand2 = (OperandToken) valStack.pop();
+                    OperandToken operand1 = (OperandToken) valStack.pop();
                     Token result = operatorToken.cal(operand1, operand2, evalContext);
                     valStack.push(result);
-                } else {
+                } else if (operatorToken.operatorType() == OperatorType.UNITARY) {
                     OperandToken operand = (OperandToken) valStack.pop();
                     valStack.push(operatorToken.cal(operand, evalContext));
+                } else {
+                    throw new GrammarException("暂时不支持其他类型的运算符：" + operatorToken.operatorType().name());
                 }
             }
         }

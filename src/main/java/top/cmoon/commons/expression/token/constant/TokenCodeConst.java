@@ -2,6 +2,9 @@ package top.cmoon.commons.expression.token.constant;
 
 public class TokenCodeConst {
 
+
+    public static final int ERROR_CODE = -1;
+
     public static final int BOOLEAN_LITERAL_TRUE = 1; // true
     public static final int BOOLEAN_LITERAL_FALSE = 2; // false
 
@@ -16,7 +19,7 @@ public class TokenCodeConst {
      */
     public static final int VARIABLE = 10; // name
 
-    public static final int STRING_LITERAL = 35; // '...'
+    public static final int STRING_LITERAL = 22; // '...'
 
     // 以下是运算符
     public static final int NOT_EQUAL = 31;  // !=
@@ -37,4 +40,9 @@ public class TokenCodeConst {
     public static final int MOD = 82;   // %
 
     public static final int EXCLAMATION_MARK = 31;  // !
+
+
+    public static final int LEFT_BRACKET = 121; // (
+    public static final int RIGHT_BRACKET = 122; // )
+
 }

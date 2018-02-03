@@ -8,11 +8,11 @@ import java.util.Map;
 public class DefaultOperatorRegistry implements OperatorRegistry {
 
     Map<Integer, OperatorRegistryEntry> codeMap;
-    Map<String, OperatorRegistryEntry> tokenMap;
+//    Map<String, OperatorRegistryEntry> tokenMap;
 
     public DefaultOperatorRegistry() {
         codeMap = new HashMap<>();
-        tokenMap = new HashMap<>();
+//        tokenMap = new HashMap<>();
     }
 
     @Override
@@ -20,10 +20,10 @@ public class DefaultOperatorRegistry implements OperatorRegistry {
         return codeMap.get(code);
     }
 
-    @Override
-    public OperatorRegistryEntry get(String token) {
-        return tokenMap.get(token);
-    }
+//    @Override
+//    public OperatorRegistryEntry get(String token) {
+//        return null;
+//    }
 
     @Override
     public void register(OperatorRegistryEntry operatorToken) {
@@ -32,10 +32,10 @@ public class DefaultOperatorRegistry implements OperatorRegistry {
         }
         codeMap.put(operatorToken.code(), operatorToken);
 
-        if (tokenMap.containsKey(operatorToken.token())) {
-            throw new RuntimeException("操作符 token 已经存在：" + operatorToken.token());
-        }
-        tokenMap.put(operatorToken.token(), operatorToken);
+//        if (tokenMap.containsKey(operatorToken.token())) {
+//            throw new RuntimeException("操作符 token 已经存在：" + operatorToken.token());
+//        }
+//        tokenMap.put(operatorToken.token(), operatorToken);
     }
 
     public static class OperatorRegistryEntryImpl implements OperatorRegistryEntry {

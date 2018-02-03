@@ -2,6 +2,7 @@ package top.cmoon.commons.expression.word;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import top.cmoon.commons.expression.exception.ReserveWordExistsException;
 import top.cmoon.commons.expression.token.Token;
 
@@ -16,6 +17,12 @@ public class DefaultWordParser implements WordParser {
 
     private Map<String, ReserveWord> reserveWords = new HashMap<>();
     private Map<Integer, ReserveWord> reserveWordCodes = new HashMap<>();   // 用于检查保留字代码是否重复
+
+    @Autowired
+    private WordToTokenHandler toTokenHandler;
+
+    @Autowired
+    private WordScanner wordScanner;
 
     @Override
     public void addReserveWords(ReserveWord... reserveWords) throws ReserveWordExistsException {
@@ -49,9 +56,6 @@ public class DefaultWordParser implements WordParser {
 
         List<Token> tokens = new ArrayList<>();
         char[] exprArr = realExpr.toCharArray();
-
-        WordToTokenHandler toTokenHandler = new DefaultWordToTokenHandler();
-        WordScanner wordScanner = new WordScanner();
 
         WordParseProgress progress = new WordParseProgress();   // 在扫描过程中，进度状态将会被更改
         do {

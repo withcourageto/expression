@@ -1,64 +1,44 @@
 package top.cmoon.commons.expression.word;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import top.cmoon.commons.expression.core.OperatorRegistry;
+import top.cmoon.commons.expression.exception.GrammarException;
 import top.cmoon.commons.expression.token.Token;
-import top.cmoon.commons.expression.token.constant.TokenCodeConst;
-import top.cmoon.commons.expression.token.operand.*;
-import top.cmoon.commons.expression.token.operator.EqualEqualToken;
-import top.cmoon.commons.expression.token.operator.GreaterThanToken;
-import top.cmoon.commons.expression.token.operator.NotEqualToken;
 
-import java.util.List;
+import static top.cmoon.commons.expression.token.constant.TokenCodeConst.ERROR_CODE;
+import static top.cmoon.commons.expression.tool.TokenTool.token;
 
-class DefaultWordToTokenHandler implements WordToTokenHandler {
+public class DefaultWordToTokenHandler implements WordToTokenHandler {
+
+    @Autowired
+    private OperatorRegistry operatorRegistry;
 
     @Override
     public Token toToken(WordParseProgress progress) {
-        switch (progress.syn) {
-            case 11:
-                // 浮点数 数字处理
-                return new FloatNumToken(progress.num);
-            case 12:
-                // 整数 数字处理
-                return new IntNumToken(progress.int_num);
-            case -1:
-                // 错误：
-                throw new RuntimeException("语法错误：错误位置" + progress.errorPosition + "error:" + progress.error);
-            default:
-                // 标识符，字面量
-                if (progress.syn == 0 && progress.token.isEmpty()) {
-                    return null; // 词法分析完成，正常结束
-                }
-                if (progress.syn == TokenCodeConst.VARIABLE) {
-                    return new VariableToken(token(progress.token));
-                } else if (progress.syn == TokenCodeConst.EQUAL_EQUAL) {
-                    return new EqualEqualToken();
-                } else if (progress.syn == TokenCodeConst.NOT_EQUAL) {
-                    return new NotEqualToken();
-                } else if (progress.syn == TokenCodeConst.STRING_LITERAL) {
-                    return new StringLiteralToken(token(progress.token));
-                } else if (progress.syn == TokenCodeConst.LITERAL_NULL) {
-                    return new NullToken();
-                } else if (progress.syn == TokenCodeConst.GREATER_THAN) {
-                    return new GreaterThanToken();
-                } else {
-                    throw new RuntimeException("暂不支持：" + "(" + progress.syn + "," + token(progress.token) + ")");
-                }
+
+        if (progress.syn == ERROR_CODE) {
+            throw new RuntimeException("语法错误：错误位置" + progress.errorPosition + "error:" + progress.error);
         }
-    }
 
-    private char[] toCharArr(List<Character> token) {
-        Character[] arr = token.toArray(new Character[0]);
-        char[] temp = new char[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            temp[i] = arr[i];
+        OperatorRegistry.OperatorRegistryEntry operatorRegistryEntry = operatorRegistry.get(progress.syn);
+
+        if (operatorRegistryEntry == null) {
+            throw new GrammarException("不支持的操作符," + progress.syn + ":" + token(progress.token));
         }
-        return temp;
-    }
 
-    private String token(List<Character> token) {
-        char[] temp = toCharArr(token);
-        return new String(temp);
-    }
+        Class<? extends Token> tokenClass = operatorRegistryEntry.tokenClass();
 
+        try {
+            Token token = tokenClass.newInstance();
+
+            token.setCode(progress.syn);
+            token.setToken(token(progress.token));
+
+            return token;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
 }

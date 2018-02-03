@@ -6,8 +6,8 @@ import top.cmoon.commons.expression.token.constant.TokenCodeConst;
 
 public class FloatNumToken extends AbstractOperandToken<Double> {
 
-    public FloatNumToken(double value) {
-        super(TokenCodeConst.FLOAT_NUMBER, value + "");
+    public FloatNumToken(String value) {
+        super(TokenCodeConst.FLOAT_NUMBER, value);
     }
 
     public FloatNumToken() {

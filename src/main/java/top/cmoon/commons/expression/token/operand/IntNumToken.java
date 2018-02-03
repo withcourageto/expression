@@ -9,8 +9,8 @@ public class IntNumToken extends AbstractOperandToken<Integer> {
     public IntNumToken() {
     }
 
-    public IntNumToken(int token) {
-        super(TokenCodeConst.INT_NUMBER, token + "");
+    public IntNumToken(String token) {
+        super(TokenCodeConst.INT_NUMBER, token);
     }
 
     @Override

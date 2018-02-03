@@ -1,5 +1,5 @@
 package top.cmoon.commons.expression.token;
 
 public enum OperatorType {
-    UNITARY, BINARY
+    UNITARY, BINARY, SUFFIX
 }

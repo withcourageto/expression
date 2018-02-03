@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface SuffixExprParser {
 
-
     List<Token> toSuffixExpr(List<Token> positiveTokens);
 
 }

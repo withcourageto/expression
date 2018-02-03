@@ -8,8 +8,6 @@ public class WordParseProgress {
     int pos;
     int syn;
     List<Character> token;
-    double num;
-    int int_num;
     String error;
     int errorPosition;
 

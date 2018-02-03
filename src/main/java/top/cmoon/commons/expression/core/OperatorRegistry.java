@@ -1,6 +1,5 @@
 package top.cmoon.commons.expression.core;
 
-import top.cmoon.commons.expression.token.OperatorToken;
 import top.cmoon.commons.expression.token.Token;
 
 /**
@@ -18,7 +17,7 @@ public interface OperatorRegistry {
 
     OperatorRegistryEntry get(int code);
 
-    OperatorRegistryEntry get(String token);
+    //OperatorRegistryEntry get(String token);
 
     void register(OperatorRegistryEntry operatorToken);
 }

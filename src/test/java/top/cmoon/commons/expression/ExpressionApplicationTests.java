@@ -31,18 +31,26 @@ public class ExpressionApplicationTests {
         String expr = "22 > 3";
         Map<String, Object> context = new HashMap<>();
         Object obj = engine.eval(expr, context);
-        Assert.assertEquals(obj, Boolean.FALSE);
+        Assert.assertEquals(Boolean.TRUE, obj);
     }
 
-    public void testContext() {
-
+    @Test
+    public void testContextVar() {
         Map<String, Object> context = new HashMap<>();
         context.put("count", 40);
 
         Object obj = engine.eval("count == 40", context);
 
-        Assert.assertEquals(obj, Boolean.TRUE);
+        Assert.assertEquals(Boolean.TRUE, obj);
     }
 
+    @Test
+    public void testPlus() {
+        Object obj = engine.eval("1+1 > 1");
+        Assert.assertEquals(Boolean.TRUE, obj);
+
+        Object obj1 = engine.eval("5-3");
+        Assert.assertEquals(2, obj1);
+    }
 
 }
