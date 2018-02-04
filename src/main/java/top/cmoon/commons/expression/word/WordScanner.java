@@ -1,14 +1,24 @@
 package top.cmoon.commons.expression.word;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import top.cmoon.commons.expression.core.TokenRegistry;
+import top.cmoon.commons.expression.core.TokenRegistry.TokenRegistryEntry;
+import top.cmoon.commons.expression.exception.GrammarException;
 import top.cmoon.commons.expression.token.constant.TokenCodeConst;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class WordScanner {
 
     private static final char space_char = ' ';
     private static final int ERROR_SYN = -1;
+
+
+    @Autowired
+    private TokenRegistry tokenRegistry;
+
 
     /**
      * 扫描表达式
@@ -79,9 +89,10 @@ public class WordScanner {
             String tokenStr = new String(toCharArr(token));
 
             // 如果在保留字中找到标识符，说明是保留字关键字
-            ReserveWord reserveWord = reserveWords.get(tokenStr);
-            if (reserveWord != null) {
-                syn = reserveWord.code();
+
+            Optional<TokenRegistryEntry> reserveWord = tokenRegistry.get(tokenStr);
+            if (reserveWord.isPresent()) {
+                syn = reserveWord.get().code();
             }
         } else if (isDigital(ch)) { // 开始字符数字
             int tempPosition = p - 1;
@@ -175,7 +186,7 @@ public class WordScanner {
                         syn = TokenCodeConst.NOT_EQUAL;
                         token.add(ch);
                     } else {
-                        syn = 31;
+                        syn = tokenRegistry.get("!").orElseThrow(() -> new GrammarException("不支持的操作符:!")).code();
                         p--;
                     }
                     break;
@@ -191,11 +202,11 @@ public class WordScanner {
                     }
                     break;
                 case '*':
-                    syn = 13;
+                    syn = tokenRegistry.get("*").orElseThrow(() -> new GrammarException("不支持的操作符:*")).code();
                     token.add(ch);
                     break;
                 case '/':
-                    syn = 14;
+                    syn = tokenRegistry.get("/").orElseThrow(() -> new GrammarException("不支持的操作符:/")).code();
                     token.add(ch);
                     break;
                 case '+':
@@ -207,15 +218,16 @@ public class WordScanner {
                     token.add(ch);
                     break;
                 case '%':
-                    syn = 17;
+                    syn = tokenRegistry.get("%").orElseThrow(() -> new GrammarException("不支持的操作符:%")).code();
                     token.add(ch);
                     break;
                 case '(':
-                    syn = 27;
+                    syn = tokenRegistry.get("(").orElseThrow(() -> new GrammarException("不支持的操作符:(")).code();
                     token.add(ch);
                     break;
                 case ')':
-                    syn = 28;
+                    syn = tokenRegistry.get(")").orElseThrow(() -> new GrammarException("不支持的操作符:)")).code();
+//                    syn = TokenCodeConst.RIGHT_BRACKET;
                     token.add(ch);
                     break;
 

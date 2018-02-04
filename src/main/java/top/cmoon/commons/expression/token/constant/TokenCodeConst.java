@@ -1,5 +1,16 @@
 package top.cmoon.commons.expression.token.constant;
 
+
+/**
+ * token 编码常量表，
+ * <p>
+ * 系统使用的编码规则，
+ * <p>
+ * <p>
+ * 30 以内的运算符优先级最低，
+ * <p>
+ * 30 以上的优先级为 ：n / 30 ,结果相同的优先级一样， 结果越大，优先越高
+ */
 public class TokenCodeConst {
 
 
@@ -35,7 +46,7 @@ public class TokenCodeConst {
     public static final int PLUS = 71;      // +
     public static final int SUBTRACT = 72;  // -
 
-    public static final int MULTIPLE = 80;  // *
+    public static final int MULTIPLY = 80;  // *
     public static final int DIVIDE = 81;    // /
     public static final int MOD = 82;   // %
 

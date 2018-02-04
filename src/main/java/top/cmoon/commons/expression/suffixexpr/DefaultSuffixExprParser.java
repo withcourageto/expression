@@ -1,5 +1,7 @@
 package top.cmoon.commons.expression.suffixexpr;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import top.cmoon.commons.expression.token.OperatorToken;
 import top.cmoon.commons.expression.token.Token;
 import top.cmoon.commons.expression.token.TokenType;
@@ -9,6 +11,8 @@ import java.util.List;
 import java.util.Stack;
 
 public class DefaultSuffixExprParser implements SuffixExprParser {
+
+    private Logger logger = LoggerFactory.getLogger(DefaultSuffixExprParser.class);
 
     /**
      * 将表达式转换为后缀表达式
@@ -43,7 +47,7 @@ public class DefaultSuffixExprParser implements SuffixExprParser {
 
                     Token temp = suffixStack.pop();
                     while (!isLeftBracket(temp)) {
-                        sufExp.add(token);
+                        sufExp.add(temp);
                         temp = suffixStack.pop();
                     }
                 } else {
@@ -69,6 +73,10 @@ public class DefaultSuffixExprParser implements SuffixExprParser {
         while (!suffixStack.isEmpty()) {
             sufExp.add(suffixStack.pop());
         }
+
+
+        logger.info("====================sufix===================");
+        logger.info(sufExp.toString());
 
         return sufExp;
     }
